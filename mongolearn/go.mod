@@ -1,4 +1,4 @@
-module bulk
+module mongolearn
 
 go 1.16
 

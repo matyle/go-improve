@@ -1,4 +1,4 @@
-package main
+package dec
 
 import (
 	"context"
@@ -10,8 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-type Decimal *decimal.Decimal
 
 type text struct {
 	Text string           `bson:"text"`
@@ -57,7 +55,7 @@ func Init() {
 	ptr := true
 	results, err := coll.UpdateOne(
 		context.TODO(),
-		bson.M{"title": "Dodging Greys dafdfds 33432erqwe3eqwe23423f"},
+		bson.M{"title": "Dodging Greys dafdfds 33432erqwe3eqwe23423f3erfewr"},
 		bson.M{
 			"$set":         bson.M{"datanfdsb": "Dodging Greys testfdaddfd nochange sdfd"},
 			"$setOnInsert": t,
