@@ -47,15 +47,15 @@ func Init() {
 
 	// results, err := coll.BulkWrite(context.TODO(), models, opts)
 	// // end bulk
-	d := decimal.NewFromFloat(1.1)
+	d := decimal.NewFromFloat(31.56463244)
 	t := &text{
-		Text: "decimal23",
+		Text: "decimal33434",
 		Num:  &d,
 	}
 	ptr := true
 	results, err := coll.UpdateOne(
 		context.TODO(),
-		bson.M{"title": "Dodging Greys dafdfds 33432erqwe3eqwe23423f3erfewr"},
+		bson.M{"title": "test Dodging Greys eretest dec"},
 		bson.M{
 			"$set":         bson.M{"datanfdsb": "Dodging Greys testfdaddfd nochange sdfd"},
 			"$setOnInsert": t,
@@ -69,5 +69,21 @@ func Init() {
 		panic(err)
 	}
 
-	fmt.Printf("Number of documents replaced or modified: %d", results.ModifiedCount)
+	fmt.Printf("Number of documents replaced or modified: %d\n", results.ModifiedCount)
+
+	//查找所有
+	cursor, err := coll.Find(context.TODO(), bson.D{})
+	if err != nil {
+		panic(err)
+	}
+	defer cursor.Close(context.TODO())
+	for cursor.Next(context.TODO()) {
+		var result text
+		err := cursor.Decode(&result)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		fmt.Println(result.Num)
+	}
 }

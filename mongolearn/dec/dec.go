@@ -8,7 +8,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/bsoncodec"
 	"go.mongodb.org/mongo-driver/bson/bsonrw"
 	"go.mongodb.org/mongo-driver/bson/bsontype"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Decimal decimal.Decimal
@@ -25,12 +24,12 @@ func (d Decimal) DecodeValue(dc bsoncodec.DecodeContext, vr bsonrw.ValueReader, 
 
 	var value decimal.Decimal
 	switch vr.Type() {
-	case bsontype.Decimal128:
-		dec, err := vr.ReadDecimal128()
+	case bsontype.String:
+		str, err := vr.ReadString()
 		if err != nil {
 			return err
 		}
-		value, err = decimal.NewFromString(dec.String())
+		value, err = decimal.NewFromString(str)
 		if err != nil {
 			return err
 		}
@@ -53,10 +52,5 @@ func (d Decimal) EncodeValue(ec bsoncodec.EncodeContext, vw bsonrw.ValueWriter, 
 	}
 
 	dec := val.Interface().(decimal.Decimal)
-	dec128, err := primitive.ParseDecimal128(dec.String())
-	if err != nil {
-		return err
-	}
-
-	return vw.WriteDecimal128(dec128)
+	return vw.WriteString(dec.String())
 }
