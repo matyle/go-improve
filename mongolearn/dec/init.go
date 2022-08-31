@@ -12,16 +12,16 @@ import (
 )
 
 type text struct {
-	Text string           `bson:"text"`
-	Num  *decimal.Decimal `bson:"num"`
+	Text string          `bson:"text"`
+	Num  decimal.Decimal `bson:"num"`
 }
 
 func Init() {
 	uri := "mongodb://localhost:27018"
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri).
 		SetRegistry(bson.NewRegistryBuilder().
-			RegisterDecoder(reflect.TypeOf(decimal.Decimal{}), Decimal{}).
-			RegisterEncoder(reflect.TypeOf(decimal.Decimal{}), Decimal{}).Build()))
+			RegisterTypeDecoder(reflect.TypeOf(decimal.Decimal{}), Decimal{}).
+			RegisterTypeEncoder(reflect.TypeOf(decimal.Decimal{}), Decimal{}).Build()))
 
 	if err != nil {
 		panic(err)
@@ -47,15 +47,15 @@ func Init() {
 
 	// results, err := coll.BulkWrite(context.TODO(), models, opts)
 	// // end bulk
-	d := decimal.NewFromFloat(31.56463244)
+	d := decimal.NewFromFloat(1324.56463244)
 	t := &text{
-		Text: "decimal33434",
-		Num:  &d,
+		Text: "decimaeqrerqwer30",
+		Num:  d,
 	}
 	ptr := true
 	results, err := coll.UpdateOne(
 		context.TODO(),
-		bson.M{"title": "test Dodging Greys eretest dec"},
+		bson.M{"title": "test Dodging Greys eretest dec 83011222"},
 		bson.M{
 			"$set":         bson.M{"datanfdsb": "Dodging Greys testfdaddfd nochange sdfd"},
 			"$setOnInsert": t,
