@@ -11,8 +11,12 @@ type Dig struct {
 }
 
 func main() {
-	d := new(Dig)
-	d.num, _ = decimal.NewFromString("0")
-	fmt.Println(d.num)
-	fmt.Println(d.num.Equal(decimal.Zero))
+	decimal.DivisionPrecision = 28
+	nums := "0.0036529728291999"
+	d, err := decimal.NewFromString(nums)
+	if err != nil {
+		fmt.Println(err)
+	}
+	d1 := d
+	fmt.Println(d1)
 }
