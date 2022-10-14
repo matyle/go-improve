@@ -2,6 +2,7 @@ package dec
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 
 	"github.com/shopspring/decimal"
@@ -36,7 +37,7 @@ func Init() {
 	coll := client.Database("insertDB").Collection("haikus")
 	_, err = coll.InsertOne(
 		context.TODO(),
-		bson.M{"_id": "kline_key_12", "text": "test id"},
+		bson.M{"_id": "kline_key21", "text": "test id", "num": decimal.NewFromFloat(1.1)},
 		nil,
 	)
 	if err != nil {
@@ -54,44 +55,44 @@ func Init() {
 	// opts := options.BulkWrite().SetOrdered(true)
 
 	// results, err := coll.BulkWrite(context.TODO(), models, opts)
-	// // end bulk
-	//d := decimal.NewFromFloat(1324.56463244)
-	//t := &text{
-	//	Text: "decimaeqrerqwer30",
-	//	Num:  d,
-	//}
-	//ptr := true
-	//results, err := coll.UpdateOne(
-	//	context.TODO(),
-	//	bson.M{"title": "test Dodging Greys eretest dec 83011222"},
-	//	bson.M{
-	//		"$set":         bson.M{"datanfdsb": "Dodging Greys testfdaddfd nochange sdfd"},
-	//		"$setOnInsert": t,
-	//	},
-	//	&options.UpdateOptions{
-	//		Upsert: &ptr,
-	//	},
-	//)
+	// end bulk
+	// d := decimal.NewFromFloat(1324.56463244)
+	// t := &text{
+	// 	Text: "decimaeqrerqwer30",
+	// 	Num:  d,
+	// }
+	// ptr := true
+	// results, err := coll.UpdateOne(
+	// 	context.TODO(),
+	// 	bson.M{"title": "test Dodging Greys eretest dec 83011222"},
+	// 	bson.M{
+	// 		"$set":         bson.M{"datanfdsb": "Dodging Greys testfdaddfd nochange sdfd"},
+	// 		"$setOnInsert": t,
+	// 	},
+	// 	&options.UpdateOptions{
+	// 		Upsert: &ptr,
+	// 	},
+	// )
 
-	//if err != nil {
-	//	panic(err)
-	//}
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	//fmt.Printf("Number of documents replaced or modified: %d\n", results.ModifiedCount)
+	// fmt.Printf("Number of documents replaced or modified: %d\n", results.ModifiedCount)
 
-	////查找所有
-	//cursor, err := coll.Find(context.TODO(), bson.D{})
-	//if err != nil {
-	//	panic(err)
-	//}
-	//defer cursor.Close(context.TODO())
-	//for cursor.Next(context.TODO()) {
-	//	var result text
-	//	err := cursor.Decode(&result)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	fmt.Printf("%+v\n", result)
-	//	fmt.Println(result.Num)
-	//}
+	//查找所有
+	cursor, err := coll.Find(context.TODO(), bson.D{})
+	if err != nil {
+		panic(err)
+	}
+	defer cursor.Close(context.TODO())
+	for cursor.Next(context.TODO()) {
+		var result text
+		err := cursor.Decode(&result)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		fmt.Println(result.Num)
+	}
 }

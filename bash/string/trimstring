@@ -1,0 +1,8 @@
+trim_string() {
+    # Usage: trim_string "   example   string    "
+    : "${1#"${1%%[![:space:]]*}"}"
+    : "${_%"${_##*[![:space:]]}"}"
+    printf '%s\n' "$_"
+}
+trim_string "   hello,world   "
+trim_string "   fdsaffsa fdsaf   "
